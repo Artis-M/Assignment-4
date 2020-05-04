@@ -9,14 +9,13 @@ public class Mine
     public static Valuable getValuable(String key)
     {
         Valuable valuable = mine.get(key);
-        String nameofValueable = valuable.getName();
         if (valuable == null)
         {
             synchronized (mine)
             {
                 if (valuable == null)
                 {
-                    switch (nameofValueable)
+                    switch (key)
                     {
                         case "Diamond":
                             valuable = new Diamond();
@@ -32,6 +31,7 @@ public class Mine
             }
 
         }
+
         return valuable;
     }
 }

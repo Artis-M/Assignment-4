@@ -6,7 +6,7 @@ public class Iron implements Valuable
     public Iron()
     {
         this.name = "Iron";
-        this.value = 1;
+        this.value = 10;
     }
 
     @Override

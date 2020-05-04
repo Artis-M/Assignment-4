@@ -6,7 +6,7 @@ public class Gold implements Valuable
     public Gold()
     {
         this.name="Gold";
-        this.value=2;
+        this.value=20;
     }
 
     @Override

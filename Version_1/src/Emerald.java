@@ -6,7 +6,7 @@ public class Emerald implements Valuable
     public Emerald()
     {
         this.name="Emerald";
-        this.value=2;
+        this.value=20;
     }
     @Override
     public String getName()

@@ -7,7 +7,7 @@ public class Diamond implements Valuable
     public Diamond()
     {
         this.name="Diamond";
-        this.value=4;
+        this.value=40;
     }
     @Override
     public String getName()
