@@ -2,7 +2,9 @@ public class Emerald implements Valuable
 {
     private String name;
     private int value;
-    public Emerald(){
+
+    public Emerald()
+    {
         this.name="Emerald";
         this.value=2;
     }

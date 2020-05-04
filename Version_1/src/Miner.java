@@ -2,7 +2,9 @@ public class Miner
 {
     private String name;
     private Valuable valuable;
-    public Miner(String name,String key){
+
+    public Miner(String name,String key)
+    {
         this.name= name;
         this.valuable= Mine.getValuable(key);
     }

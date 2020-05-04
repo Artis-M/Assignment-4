@@ -4,12 +4,14 @@ private static Logger instance;
 private Logger(){
 
 }
-public static Logger getInstance(){
-    if(instance == null){
-        instance = new Logger();
+public static Logger getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new Logger();
+        }
+        return instance;
     }
-    return instance;
-}
 public void log(String text){
     System.out.println("Logger:" + text);
 }

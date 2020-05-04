@@ -1,6 +1,6 @@
 public interface Valuable
 {
-    public String getName();
+    String getName();
 
-    public int getValue();
+    int getValue();
 }
