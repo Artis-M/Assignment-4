@@ -1,6 +1,8 @@
-public interface Deposit<T> {
-    public void enqueue(T object);
-    public T dequeue();
-    public T getLastValue();
+public interface Deposit<Valuable> {
+    public void enqueue(Valuable valuable);
+    public Valuable dequeue();
+    public Valuable getLastValue();
+    public Valuable getValuableAtIndex(int index);
     public void clear();
+    public int size();
 }

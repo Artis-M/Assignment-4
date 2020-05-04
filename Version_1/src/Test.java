@@ -2,7 +2,8 @@ public class Test
 {
     public static void main(String[] args)
     {
-        Deposit<Valuable> deposit = new ValuableDepository(16);
+        Deposit<Valuable> deposit = new ValuableDepository<>(16) {
+        };
         Miner miner1 = new Miner("Bob1", deposit);
         Miner miner2 = new Miner("Bob2", deposit);
         Miner miner3 = new Miner("Bob3", deposit);
