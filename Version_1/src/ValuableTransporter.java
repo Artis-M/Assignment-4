@@ -1,40 +1,63 @@
 public class ValuableTransporter implements Runnable
 {
-    private int targetValue;
-    private int currentValue;
-    private Deposit<Valuable> deposit;
-    private Logger log;
+  private int targetValue;
+  private int currentValue;
+  private Deposit<Valuable> deposit;
+  private Logger log;
 
-    public ValuableTransporter()
+  public ValuableTransporter(Deposit<Valuable> valuableDepository)
+  {
+    this.targetValue = Math
+        .round(50 + (int) (Math.random() * ((200 - 50) + 1)));
+    this.currentValue = 0;
+    this.deposit = valuableDepository;
+    this.log = Logger.getInstance();
+    log.log(targetValue + "");
+  }
+
+  @Override public void run()
+  {
+    int i = 0;
+    try
     {
-        this.targetValue = Math.round(50 + (int) (Math.random() * ((200 - 50) + 1)));
-        this.currentValue = 0;
-        this.deposit = new ValuableDepository<>(200);
-        this.log = Logger.getInstance();
-        log.log(targetValue+"");
+      Thread.sleep(1000);
+    }
+    catch (InterruptedException e)
+    {
+      e.printStackTrace();
     }
 
-    @Override
-    public void run() {
-     int i = 0;
-     while(true){
+    while (true)
+    {
+      if (currentValue < targetValue && i < deposit.size())
+      {
+        Valuable valuable = deposit.getValuableAtIndex(i);
+        currentValue += valuable.getValue();
+        i++;
 
-             if(currentValue <= targetValue){
-                 Valuable valuable = deposit.getValuableAtIndex(i);
-                 if(valuable != null){
-                     currentValue += valuable.getValue();
-                     System.out.println("valuable added");
-                     i++;
-                 }
-             }
-             else {
-                 i =0;
-                 deposit.clear();
-                 System.out.println("shit delivered");
-             }
-         }
-
-
-     }
+        System.out.println(
+            "valuable added" + valuable.getName() + " " + valuable.getValue());
+        System.out.println("THE CURRENT VALUE IS " + currentValue);
+        System.out.println("THE TARGET VALUE IS " + targetValue);
+      }
+      else if (currentValue >= targetValue)
+      {
+        deposit.clear();
+        currentValue = 0;
+        targetValue = Math.round(50 + (int) (Math.random() * ((200 - 50) + 1)));
+        System.out.println("shit delivered");
+        i = 0;
+        try
+        {
+          Thread.sleep(3000);
+        }
+        catch (InterruptedException e)
+        {
+          e.printStackTrace();
+        }
+      }
     }
+
+  }
+}
 

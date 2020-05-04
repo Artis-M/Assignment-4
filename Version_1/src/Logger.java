@@ -1,18 +1,23 @@
-public class Logger {
-private static Logger instance;
+public class Logger
+{
+  private static Logger instance = null;
 
-private Logger(){
+  private Logger()
+  {
 
-}
-public static Logger getInstance()
+  }
+
+  public static Logger getInstance()
+  {
+    if (instance == null)
     {
-        if(instance == null)
-        {
-            instance = new Logger();
-        }
-        return instance;
+      instance = new Logger();
     }
-public void log(String text){
+    return instance;
+  }
+
+  public void log(String text)
+  {
     System.out.println("Logger:" + text);
-}
+  }
 }

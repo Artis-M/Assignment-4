@@ -9,6 +9,7 @@ public class Miner implements Runnable
     {
         this.name = name;
         this.valuableDepository = valuableDepository;
+        this.valuable = null;
         log = Logger.getInstance();
     }
 
@@ -27,17 +28,25 @@ public class Miner implements Runnable
     {
         while (true)
         {
-            int random = (int) Math.round(Math.random() * 5);
+            int random = (int) Math.round(Math.random() * 4);
+            System.out.println(random);
             switch (random)
             {
+                case 0:
+                    this.valuable = Mine.getValuable("Rock");
+                    break;
                 case 1:
-                    this.valuable = (Valuable) Mine.getValuable("Diamond");
+                    this.valuable =  Mine.getValuable("Diamond");
+                    break;
                 case 2:
-                    this.valuable = (Valuable) Mine.getValuable("Emerald");
+                    this.valuable =  Mine.getValuable("Emerald");
+                    break;
                 case 3:
-                    this.valuable = (Valuable) Mine.getValuable("Iron");
+                    this.valuable =  Mine.getValuable("Iron");
+                    break;
                 case 4:
-                    this.valuable = (Valuable) Mine.getValuable("Gold");
+                    this.valuable =  Mine.getValuable("Gold");
+                    break;
             }
             valuableDepository.enqueue(valuable);
             log.log("Miner " + name + " added a " + valuable.getName() + " to the depository.");

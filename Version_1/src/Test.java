@@ -7,7 +7,7 @@ public class Test
         Miner miner1 = new Miner("Bob1", deposit);
         Miner miner2 = new Miner("Bob2", deposit);
         Miner miner3 = new Miner("Bob3", deposit);
-        ValuableTransporter valuableTransporter = new ValuableTransporter();
+        ValuableTransporter valuableTransporter = new ValuableTransporter(deposit);
         Thread t1 = new Thread(miner1);
         Thread t2 = new Thread(miner2);
         Thread t3 = new Thread(miner3);
