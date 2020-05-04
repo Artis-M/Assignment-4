@@ -1,10 +1,4 @@
-import utility.collection.ArrayList;
-
-public class Deposit<T> {
-    private ArrayList<T> arrayList;
-public Deposit(){
-    arrayList = new ArrayList<>(50);
-}
-
-
+public interface Deposit<T> {
+    public void enqueue(T object);
+    public T dequeue();
 }
