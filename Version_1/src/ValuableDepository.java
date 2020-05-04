@@ -1,6 +1,6 @@
 import utility.collection.ArrayList;
 
-public class ValuableDepository<T> implements Deposit{
+public class ValuableDepository<T> implements Deposit {
     private ArrayList<Object> arrayList;
     private int size;
     private Logger log;
