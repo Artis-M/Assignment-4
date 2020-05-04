@@ -1,10 +1,10 @@
-public class Miner implements Runnable
+public class Miner<Valuable> implements Runnable
 {
     private String name;
     private Valuable valuable;
-    private ValuableDepository valuableDepository;
+    private Deposit<Valuable> valuableDepository;
 
-    public Miner(String name, String key, ValuableDepository valuableDepository)
+    public Miner(String name, Deposit<Valuable> valuableDepository)
     {
         this.name = name;
         this.valuableDepository = valuableDepository;

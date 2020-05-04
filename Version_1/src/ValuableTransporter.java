@@ -1,16 +1,17 @@
-public class ValuableTransporter implements Runnable
+public class ValuableTransporter<Valuable> implements Runnable
 {
     private int targetValue;
     private int currentValue;
-    private Deposit deposit;
+    private Deposit<Valuable> deposit;
     private Logger log;
 
     public ValuableTransporter()
     {
-        this.targetValue = 50 + (int) (Math.random() * ((200 - 50) + 1));
+        this.targetValue = Math.round(50 + (int) (Math.random() * ((200 - 50) + 1)));
         this.currentValue = 0;
-        this.deposit = new ValuableDepository(200);
+        this.deposit = new ValuableDepository<Valuable>(200);
         this.log = Logger.getInstance();
+        log.log(targetValue+"");
     }
 
     @Override
@@ -34,6 +35,8 @@ public class ValuableTransporter implements Runnable
             {
                 e.printStackTrace();
             }
+            targetValue = Math.round(50 + (int) (Math.random() * ((200 - 50) + 1)));
+            currentValue = 0;
         }
     }
 }

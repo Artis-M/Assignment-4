@@ -1,8 +1,8 @@
 import utility.collection.ArrayList;
 
-public class ValuableDepository<T> implements Deposit
+public class ValuableDepository<T> implements Deposit<T>
 {
-    private ArrayList<Object> arrayList;
+    private ArrayList<T> arrayList;
     private int size;
     private Logger log;
 
@@ -14,7 +14,7 @@ public class ValuableDepository<T> implements Deposit
     }
 
     @Override
-    public void enqueue(Object object)
+    public void enqueue(T object)
     {
         if (arrayList.size() < size)
         {
@@ -26,7 +26,7 @@ public class ValuableDepository<T> implements Deposit
     }
 
     @Override
-    public Object dequeue()
+    public T dequeue()
     {
         if (arrayList.size() > 0)
         {
@@ -39,7 +39,7 @@ public class ValuableDepository<T> implements Deposit
     }
 
     @Override
-    public Object getLastValue()
+    public T getLastValue()
     {
         return arrayList.get(arrayList.size() - 1);
     }
