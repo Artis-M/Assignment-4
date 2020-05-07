@@ -21,7 +21,7 @@ public class ValuableDepository<Valuable> implements Deposit<Valuable>
     }
     else
     {
-      log.log("ValuableDepository is full.");
+      log.log("Valuable Depository is full.");
     }
   }
 
@@ -29,7 +29,7 @@ public class ValuableDepository<Valuable> implements Deposit<Valuable>
   {
     if (arrayList.size() > 0)
     {
-      return arrayList.remove(arrayList.size());
+      return arrayList.remove(arrayList.size()-1);
     }
     else
     {
