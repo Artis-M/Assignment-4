@@ -6,14 +6,12 @@ public class TreasureRoomMonitor<Valuable> implements TreasureRoomDoor<Valuable>
   private int writer;
   private int waitingWriters;
   private Guard guard;
-  private ArrayList<Valuable> list;
 
   public TreasureRoomMonitor(Guard guard)
   {
     this.readers = 0;
     this.writer = 0;
     this.waitingWriters = 0;
-    this.list = new ArrayList<>();
     this.guard = guard;
   }
 
