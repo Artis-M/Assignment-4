@@ -25,11 +25,11 @@ public class ValuableDepository<Valuable> implements Deposit<Valuable>
     }
   }
 
-  @Override public synchronized Valuable dequeue()
+  @Override public synchronized Valuable dequeue(int index)
   {
     if (arrayList.size() > 0)
     {
-      return arrayList.remove(arrayList.size()-1);
+      return arrayList.remove(index);
     }
     else
     {

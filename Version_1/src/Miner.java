@@ -33,22 +33,22 @@ public class Miner implements Runnable
             switch (random)
             {
                 case 0:
-                    this.valuable = Mine.getValuable("Rock");
+                    this.valuable =  Mine.getValuable("Diamond");
+                    valuableDepository.enqueue(valuable);
                     break;
                 case 1:
-                    this.valuable =  Mine.getValuable("Diamond");
+                    this.valuable =  Mine.getValuable("Emerald");
+                    valuableDepository.enqueue(valuable);
                     break;
                 case 2:
-                    this.valuable =  Mine.getValuable("Emerald");
+                    this.valuable =  Mine.getValuable("Iron");
+                    valuableDepository.enqueue(valuable);
                     break;
                 case 3:
-                    this.valuable =  Mine.getValuable("Iron");
-                    break;
-                case 4:
                     this.valuable =  Mine.getValuable("Gold");
+                    valuableDepository.enqueue(valuable);
                     break;
             }
-            valuableDepository.enqueue(valuable);
             log.log("Miner " + name + " added a " + valuable.getName() + " to the depository.");
             try
             {

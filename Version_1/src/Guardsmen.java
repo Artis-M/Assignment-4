@@ -1,10 +1,10 @@
-public class Guardsmen implements TreasureRoomDoor<Valuable>
+public class Guardsmen implements WriterInterface
 {
-    private TreasureRoom<Valuable> treasureRoom;
+    private TreasureRoom treasureRoom;
 
     public Guardsmen()
     {
-        this.treasureRoom = new TreasureRoom<>();
+        this.treasureRoom = new TreasureRoom();
     }
 
     @Override
@@ -26,20 +26,8 @@ public class Guardsmen implements TreasureRoomDoor<Valuable>
     }
 
     @Override
-    public void acquireRead()
-    {
-        treasureRoom.acquireRead();
-    }
-
-    @Override
     public int size()
     {
         return treasureRoom.size();
-    }
-
-    @Override
-    public void acquireWrite()
-    {
-        treasureRoom.acquireWrite();
     }
 }

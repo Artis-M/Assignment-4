@@ -15,9 +15,6 @@ public class Mine
       {
         switch (key)
         {
-          case "Rock":
-            valuable = new Rock();
-            break;
           case "Diamond":
             valuable = new Diamond();
             break;

@@ -1,16 +1,11 @@
 public interface TreasureRoomDoor<Valuable>
 {
-    void addValuable(Valuable valuable);
+  ReaderInterface acquireRead();
 
-    Valuable retrieveValuable(int index);
+  void releaseRead();
 
-    Valuable look(int index);
+  WriterInterface acquireWrite();
 
-    void acquireRead();
-
-int size();
-
-    void acquireWrite();
-
+  void releaseWrite();
 
 }

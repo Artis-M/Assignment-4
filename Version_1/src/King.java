@@ -2,13 +2,13 @@ import utility.collection.ArrayList;
 
 public class King implements Runnable
 {
-    private TreasureRoom<Valuable> treasureRoom;
+    private TreasureRoomMonitor<Valuable> treasureRoomMonitor;
     private Logger log;
 
-    public King()
+    public King(TreasureRoomMonitor<Valuable> treasureRoomMonitor)
     {
-        this.treasureRoom = new TreasureRoom<>();
         this.log = Logger.getInstance();
+        this.treasureRoomMonitor = treasureRoomMonitor;
     }
 
     @Override
@@ -17,22 +17,23 @@ public class King implements Runnable
 
         while (true)
         {
-            treasureRoom.acquireWrite();
+            WriterInterface guardsmen = treasureRoomMonitor.acquireWrite();
             int random = Math.round(50 + (int) (Math.random() * ((200 - 50) + 1)));
             log.log("\u001B[31m Party goal: " + random + "\u001B[0m");
-
             int current = 0;
+
             ArrayList<Valuable> kingpocket = new ArrayList<>();
 
-            for (int i = 0; i < treasureRoom.size(); i++)
+            for (int i = 0; i < guardsmen.size(); i++)
             {
-                kingpocket.add(treasureRoom.retrieveValuable(i));
+                kingpocket.add(guardsmen.retrieveValuable(i));
                 current += kingpocket.get(i).getValue();
-                log.log("\u001B[32m Current: " + current + "\u001B[0m");
+                System.out.println("CURRENT: " + current);
             }
+            System.out.println("THE SIZE IS : " + guardsmen.size());
+            log.log("\u001B[32m Current: " + current + "\u001B[0m");
             if (current >= random)
             {
-                System.out.println("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZz");
                 for (int j = 0; j < kingpocket.size(); j++)
                 {
                     kingpocket.remove(j);
@@ -43,18 +44,18 @@ public class King implements Runnable
             {
                 for (int j = 0; j < kingpocket.size(); j++)
                 {
-                    treasureRoom.addValuable(kingpocket.get(j));
+                    guardsmen.addValuable(kingpocket.get(j));
                 }
                 log.log("Party is cancelled, insufficient funds.");
             }
             try
             {
-                Thread.sleep(10000);
+                Thread.sleep(5000);
             } catch (InterruptedException e)
             {
                 e.printStackTrace();
             }
-            log.log("DONE");
+            treasureRoomMonitor.releaseWrite();
         }
     }
 }
