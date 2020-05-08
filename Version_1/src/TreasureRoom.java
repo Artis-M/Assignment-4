@@ -14,14 +14,13 @@ public class TreasureRoom implements WriterInterface
   @Override public void addValuable(Valuable valuable)
   {
     list.add(valuable);
-    log.log("Valuable was added to the Treasure Room: " + valuable);
+    log.log("Valuable was added to the Treasure Room: " + valuable.getName());
   }
 
-  @Override public Valuable retrieveValuable(int index)
+  @Override public Valuable retrieveValuable()
   {
-    Valuable valuable = list.get(index);
-    list.remove(index);
-    return valuable;
+    Valuable valuable = list.get(list.size() - 1);
+    return list.remove(valuable);
   }
 
   @Override public Valuable look(int index)

@@ -3,33 +3,26 @@ import utility.collection.ArrayList;
 public class ValuableDepository<Valuable> implements Deposit<Valuable>
 {
   private ArrayList<Valuable> arrayList;
-  private int size;
   private Logger log;
 
-  public ValuableDepository(int size)
+  public ValuableDepository()
   {
     arrayList = new ArrayList<>();
-    this.size = size;
     log = Logger.getInstance();
   }
 
   @Override public synchronized void enqueue(Valuable valuable)
   {
-    if (arrayList.size() < size)
-    {
-      arrayList.add(valuable);
-    }
-    else
-    {
-      log.log("Valuable Depository is full.");
-    }
+
+    arrayList.add(valuable);
+
   }
 
-  @Override public synchronized Valuable dequeue(int index)
+  @Override public synchronized Valuable dequeue()
   {
     if (arrayList.size() > 0)
     {
-      return arrayList.remove(index);
+      return arrayList.remove(arrayList.size() - 1);
     }
     else
     {
@@ -64,6 +57,11 @@ public class ValuableDepository<Valuable> implements Deposit<Valuable>
   @Override public synchronized int size()
   {
     return arrayList.size();
+  }
+
+  @Override public boolean isEmpty()
+  {
+    return arrayList.isEmpty();
   }
 
 }

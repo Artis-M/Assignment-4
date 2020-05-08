@@ -1,4 +1,3 @@
-
 public class Diamond implements Valuable
 {
     private String name;
@@ -6,17 +5,16 @@ public class Diamond implements Valuable
 
     public Diamond()
     {
-        this.name="Diamond";
-        this.value=40;
+        this.name = "Diamond";
+        this.value = 40;
     }
-    @Override
-    public String getName()
+
+    @Override public String getName()
     {
         return name;
     }
 
-    @Override
-    public int getValue()
+    @Override public int getValue()
     {
         return value;
     }

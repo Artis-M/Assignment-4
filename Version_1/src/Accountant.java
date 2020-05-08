@@ -13,12 +13,14 @@ public class Accountant implements Runnable
   {
     while (true)
     {
-      ReaderInterface guardsmen = treasureRoomMonitor.acquireRead();
+      ReaderInterface guard = treasureRoomMonitor.acquireRead();
       int sum = 0;
-      for (int i = 0; i < guardsmen.size(); i++)
+      for (int i = 0; i < guard.size(); i++)
       {
-        sum += guardsmen.look(i).getValue();
+        sum += guard.look(i).getValue();
       }
+      treasureRoomMonitor.releaseRead();
+      log.log("Accountant - Value of treasure: " + sum);
 
       try
       {
@@ -28,16 +30,6 @@ public class Accountant implements Runnable
       {
         e.printStackTrace();
       }
-      log.log("Value of treasure: " + sum);
-      try
-      {
-        Thread.sleep(5000);
-      }
-      catch (InterruptedException e)
-      {
-        e.printStackTrace();
-      }
-      treasureRoomMonitor.releaseRead();
     }
   }
 }

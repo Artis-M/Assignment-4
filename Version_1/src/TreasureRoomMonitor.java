@@ -2,73 +2,71 @@ import utility.collection.ArrayList;
 
 public class TreasureRoomMonitor<Valuable> implements TreasureRoomDoor<Valuable>
 {
-    private int readers;
-    private int writer;
-    private int waitingwriters;
-    private Guardsmen guardsmen;
-    private ArrayList<Valuable> list;
-    private Logger log;
+  private int readers;
+  private int writer;
+  private int waitingWriters;
+  private Guard guard;
+  private ArrayList<Valuable> list;
 
-    public TreasureRoomMonitor(Guardsmen guardsmen)
+  public TreasureRoomMonitor(Guard guard)
+  {
+    this.readers = 0;
+    this.writer = 0;
+    this.waitingWriters = 0;
+    this.list = new ArrayList<>();
+    this.guard = guard;
+  }
+
+  @Override public synchronized ReaderInterface acquireRead()
+  {
+    while (waitingWriters > 0 || writer > 0)
     {
-        this.readers = 0;
-        this.writer = 0;
-        this.waitingwriters = 0;
-        this.log = Logger.getInstance();
-        this.list = new ArrayList<>();
-        this.guardsmen = guardsmen;
-    }
+      try
+      {
+        wait();
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
 
-    @Override public synchronized ReaderInterface acquireRead()
+      }
+    }
+    readers++;
+    return guard;
+  }
+
+  @Override public synchronized void releaseRead()
+  {
+    readers--;
+    if (readers == 0)
     {
-        while (waitingwriters > 0 || writer > 0)
-        {
-            try
-            {
-                wait();
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-
-            }
-        }
-        readers++;
-        return guardsmen;
+      notify();
     }
+  }
 
-    @Override public synchronized void releaseRead()
+  @Override public synchronized WriterInterface acquireWrite()
+  {
+    waitingWriters++;
+    while (readers > 0 || writer > 0)
     {
-        readers--;
-        if(readers == 0)
-        {
-            notify();
-        }
+      try
+      {
+        wait();
+      }
+      catch (InterruptedException e)
+      {
+        e.printStackTrace();
+      }
     }
+    waitingWriters--;
+    writer++;
+    return guard;
+  }
 
-    @Override
-    public synchronized WriterInterface acquireWrite()
-    {
-        waitingwriters++;
-        while (readers > 0 || writer > 0)
-        {
-            try
-            {
-                wait();
-            } catch (InterruptedException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        waitingwriters--;
-        writer++;
-        return guardsmen;
-    }
-
-    @Override public synchronized void releaseWrite()
-    {
-        writer--;
-        notifyAll();
-    }
+  @Override public synchronized void releaseWrite()
+  {
+    writer--;
+    notifyAll();
+  }
 
 }

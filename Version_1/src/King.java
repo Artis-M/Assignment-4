@@ -2,60 +2,60 @@ import utility.collection.ArrayList;
 
 public class King implements Runnable
 {
-    private TreasureRoomMonitor<Valuable> treasureRoomMonitor;
-    private Logger log;
+  private TreasureRoomMonitor<Valuable> treasureRoomMonitor;
+  private Logger log;
 
-    public King(TreasureRoomMonitor<Valuable> treasureRoomMonitor)
+  public King(TreasureRoomMonitor<Valuable> treasureRoomMonitor)
+  {
+    this.log = Logger.getInstance();
+    this.treasureRoomMonitor = treasureRoomMonitor;
+  }
+
+  @Override public void run()
+  {
+
+    while (true)
     {
-        this.log = Logger.getInstance();
-        this.treasureRoomMonitor = treasureRoomMonitor;
-    }
+      WriterInterface guard = treasureRoomMonitor.acquireWrite();
+      int goal = Math.round(50 + (int) (Math.random() * ((200 - 50) + 1)));
+      log.log("\u001B[31m Party goal: " + goal + "\u001B[0m");
+      int current = 0;
 
-    @Override
-    public void run()
-    {
+      ArrayList<Valuable> kingPocket = new ArrayList<>();
 
-        while (true)
+      while (current < goal && guard.size() != 0)
+      {
+        kingPocket.add(guard.retrieveValuable());
+        current += kingPocket.get(kingPocket.size() - 1).getValue();
+      }
+      log.log("\u001B[32m Current amount in the king's pocket: " + current + "\u001B[0m");
+
+      if (current >= goal)
+      {
+        while (!kingPocket.isEmpty())
         {
-            WriterInterface guardsmen = treasureRoomMonitor.acquireWrite();
-            int random = Math.round(50 + (int) (Math.random() * ((200 - 50) + 1)));
-            log.log("\u001B[31m Party goal: " + random + "\u001B[0m");
-            int current = 0;
-
-            ArrayList<Valuable> kingpocket = new ArrayList<>();
-
-            for (int i = 0; i < guardsmen.size(); i++)
-            {
-                kingpocket.add(guardsmen.retrieveValuable(i));
-                current += kingpocket.get(i).getValue();
-                System.out.println("CURRENT: " + current);
-            }
-            System.out.println("THE SIZE IS : " + guardsmen.size());
-            log.log("\u001B[32m Current: " + current + "\u001B[0m");
-            if (current >= random)
-            {
-                for (int j = 0; j < kingpocket.size(); j++)
-                {
-                    kingpocket.remove(j);
-                }
-                log.log("\u001B[33m PARTYYYYYYYYYYY" + "\u001B[0m");
-
-            } else
-            {
-                for (int j = 0; j < kingpocket.size(); j++)
-                {
-                    guardsmen.addValuable(kingpocket.get(j));
-                }
-                log.log("Party is cancelled, insufficient funds.");
-            }
-            try
-            {
-                Thread.sleep(5000);
-            } catch (InterruptedException e)
-            {
-                e.printStackTrace();
-            }
-            treasureRoomMonitor.releaseWrite();
+          kingPocket.remove(kingPocket.size() - 1);
         }
+        log.log("\u001B[33m PARTYYYYYYYYYYY" + "\u001B[0m");
+
+      }
+      else
+      {
+        for (int j = 0; j < kingPocket.size(); j++)
+        {
+          guard.addValuable(kingPocket.get(j));
+        }
+        log.log("Party is cancelled, insufficient funds.");
+      }
+      treasureRoomMonitor.releaseWrite();
+      try
+      {
+        Thread.sleep(5000);
+      }
+      catch (InterruptedException e)
+      {
+        e.printStackTrace();
+      }
     }
+  }
 }
